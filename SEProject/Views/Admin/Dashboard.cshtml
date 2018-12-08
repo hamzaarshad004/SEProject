@@ -1,0 +1,25 @@
+﻿
+@model IEnumerable<SEProject.Models.SchoolViewModel>
+
+@foreach (var item in Model)
+{
+    <div class=" container mt-3 mt-md-5">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <img src=@Url.Content(item.file) width="1400" height="668" alt="School Logo" class="img-fluid mb-3 mb-md-0" />
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <h3> School Name: @item.SchoolName</h3>
+                    <p> City: @item.City</p>
+                    <p> Address: @item.Address</p>
+                    <p> Admission Fee: @item.AdmissionFee</p>
+                    <p> Fee(PG-Middle): @item.FeePG_Middle</p>
+                    <p> Fee(Matric/O-Levels): @item.FeeMatric_Olevels</p>
+                    <a href= @Url.Action("Edit", "Admin", new {id = item.id}) class="btn btn-primary" type="button">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

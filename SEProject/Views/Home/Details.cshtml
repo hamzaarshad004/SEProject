@@ -1,0 +1,118 @@
+﻿
+@model SEProject.Models.SchoolViewModel
+
+@{
+    var item = Model;
+    string localurl = Request.Url.AbsolutePath;
+    bool check = false;
+}
+
+<div class=" container mt-3 mt-md-5">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-6 order-md-2">
+                <img class="img-fluid mt-md-3" src=@Url.Content(item.file) style="width:500px; height:250px;">
+            </div>
+            <div class="col-md-6 order-md-1">
+                <h3> School Name: @item.SchoolName </h3>
+                <p> City: @item.City </p>
+                <p> Address: @item.Address </p>
+                <p> Admission Fee: @item.AdmissionFee </p>
+                <p> Fee(PG-Middle): @item.FeePG_Middle </p>
+                <p> Fee(Matric/O-Levels): @item.FeeMatric_Olevels</p>
+                <p> Phone No: @item.PhoneNo </p>
+                <p> Average Rating: @item.Rating Stars</p>
+                @if (Request.IsAuthenticated && User.IsInRole("User"))
+                {
+                        <button id="modal-opener" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">Rate</button>
+                }
+                else if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+
+                }
+                else
+                {
+                    <p>Please <a href="/Account/Login?ReturnUrl=@Request.Url.AbsolutePath"> Login </a> to Rate</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@foreach (var rating in item.Ratings_List)
+{
+    <div class="container mt-md-2">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card" style="width:100%">
+                    <div class="card-body">
+                        <h6 class="card-title"> @rating.AddedBy </h6>
+                        <div class="card-text">
+                            @for (int i = 0; i < rating.Rating; i++)
+                             {
+                                 <i class="fa fa-star"></i>
+                             }
+                        </div>
+                        <div class="card-text">
+                            @rating.Review
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Rate & Review</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @using (Html.BeginForm("Rate", "Home", new { id = item.id, url = localurl }, FormMethod.Post))
+            {
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-check-inline">
+                            <input type="radio" class="form-check-input" name="Rating" value="1" required> <i class="fa fa-star"></i>
+                        </div>
+                        <div class="form-check-inline">
+                            <input type="radio" class="form-check-input" name="Rating" value="2"> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                        </div>
+                        <div class="form-check-inline">
+                            <input type="radio" class="form-check-input" name="Rating" value="3"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                        </div>
+                        <div class="form-check-inline">
+                            <input type="radio" class="form-check-input" name="Rating" value="4"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                        </div>
+                        <div class="form-check-inline">
+                            <input type="radio" class="form-check-input" name="Rating" value="5"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment">Review:</label>
+                            <textarea class="form-control" rows="5" id="comment" name="Review"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-danger" value="Submit">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            }
+            <!-- Modal body -->
+
+        </div>
+    </div>
+</div>
+

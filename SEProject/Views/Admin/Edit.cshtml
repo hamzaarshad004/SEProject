@@ -1,0 +1,75 @@
+﻿@model SEProject.Models.SchoolViewModel
+
+@using (Html.BeginForm(Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <div class="container mt-3 mt-md-5">
+        <div class="row align-items-center">
+            <div class="mt-md-5 col-md-4 mx-md-auto col-12">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label for="Name">School Name:</label>
+                    @Html.EditorFor(model => model.SchoolName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SchoolName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="City">City:</label>
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="Address">Address:</label>
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="phno">Phone No:</label>
+                    @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="fee">Admission Fee:</label>
+                    @Html.EditorFor(model => model.AdmissionFee, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AdmissionFee, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="fee">Fee(PG-Middle):</label>
+                    @Html.EditorFor(model => model.FeePG_Middle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FeePG_Middle, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label for="fee">Fee(Matric/O-Levels):</label>
+                    @Html.EditorFor(model => model.FeeMatric_Olevels, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FeeMatric_Olevels, "", new { @class = "text-danger" })
+                </div>
+
+                <label for="Img">
+                    Image:
+                </label>
+                <div class="mb-3">
+                    @Html.EditorFor(model => model.file, new { htmlAttributes = new { @class = "form-control", @type = "file" } })
+                    @Html.ValidationMessageFor(model => model.file, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="text-success">
+                        @ViewBag.FileStatus
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column col-8 flex-md-row lead mb-3 justify-content-md-center ml-5">
+                    <input type="submit" value="Edit School" class="btn btn-outline-secondary mb-md-0 mr-md-3" />
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+}
